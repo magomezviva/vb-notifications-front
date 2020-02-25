@@ -6,6 +6,11 @@
           <div :key="index" class="bar-segment" @mouseenter="setTooltip(el)"
             :class="{ 'error': el.isError, 'success' : !el.isError }"></div>
         </template>
+        <template v-if="(limitBoxes - resumeData.length) > 0">
+          <template v-for="(i, index) in (limitBoxes - resumeData.length)">
+            <div class="no-data bar-segment" :key="ramdomBoxes + index"></div>
+          </template>
+        </template>
       </template>
     </div>
     <transition name="resume-anim">
@@ -23,12 +28,17 @@ export default {
     resumeData: {
       type: Array,
       default: []
-    }
+    },
+    limitBoxes: {
+      type: Number,
+      default: 50
+    },
   },
   data() {
     return {
       showTooltip: false,
-      details: null
+      details: null,
+      ramdomBoxes: 0,
     }
   },
   methods: {
@@ -46,6 +56,9 @@ export default {
       } 
     }
   },
+  beforeMount(){
+    this.ramdomBoxes = Math.random();
+  }
 }
 </script>
 
@@ -67,12 +80,15 @@ export default {
         transform: translate(0, -10px);
       }
 
-      .error {
-        background-color: red;
+      &.error {
+        background-color: $viva-red;
       }
 
-      .success {
-        background-color: green;
+      &.success {
+        background-color: $viva-green;
+      }
+      &.no-data{
+        background-color: $viva-grey-light;
       }
     }
   }
