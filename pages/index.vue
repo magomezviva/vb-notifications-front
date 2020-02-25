@@ -19,16 +19,30 @@ export default {
   },
   data() {
     return {
-      graphData: null
+      graphData: null,
+      limit: 100,
+      page: 1,
+    }
+  },
+  head() {
+    return {
+      title: "Status Viva Aerobus",
+      meta: [
+        // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+        // {
+        //   hid: 'description',
+        //   name: 'description',
+        //   content: 'My custom description'
+        // }
+      ]
     }
   },
   async mounted() {
     try {
-      console.log(this.$axios.defaults.baseURL);
       const url = ''
       const query = `
       {
-       GetAccounts(page: 1, limit: 20){
+       GetAccounts(page: ${this.page}, limit: ${this.limit}){
            totalDocs,
            docs{
              key,
@@ -47,7 +61,7 @@ export default {
       const data = await this.$axios({
         url,
         method: 'post',
-        data:{
+        data: {
           query
         }
       });
