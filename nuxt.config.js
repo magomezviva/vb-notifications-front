@@ -58,12 +58,12 @@ export default {
   */
   axios: {
     //host: "status.vivaaerobus.com",
-    host: "localhost",
-    prefix: "/graph",
-    port: 8080,
-    https: false,
+    host: process.env.AXIOS_HOST || "localhost",
+    prefix: process.env.AXIOS_PREFIX || "/graph",
+    port: process.env.AXIOS_PORT || 8080,
+    https: process.env.AXIOS_HTTPS || false,
     progress: true,
-    debug: true
+    debug: process.env.AXIOS_DEBUG || true
   },
   /*
   ** vuetify module configuration
