@@ -6,11 +6,11 @@
       </v-card-title>
       <v-card-text>
         <template v-if="data.notificationResume.length > 0">
-          <v-alert border="bottom" colored-border type="error" v-if="data.notificationResume[0].isError">
-            {{ data.notificationResume[0].message }}
+          <v-alert border="bottom" colored-border type="error" v-if="data.notificationResume[data.notificationResume.length - 1].isError">
+            {{ data.notificationResume[data.notificationResume.length - 1].message }}
           </v-alert>
           <v-alert border="bottom" colored-border type="success" v-else>
-            {{ data.notificationResume[0].message }}
+            {{ data.notificationResume[data.notificationResume.length - 1].message }}
           </v-alert>
         </template>
       </v-card-text>
@@ -38,6 +38,9 @@ export default {
       }
     }
   },
+  beforeMount(){
+    this.data.notificationResume = this.data.notificationResume.reverse();
+  }
 }
 </script>
 
@@ -45,4 +48,7 @@ export default {
 .card-container{
   margin: 30px 0;
 }  
+.v-card__title{
+  text-transform: capitalize;
+}
 </style>
