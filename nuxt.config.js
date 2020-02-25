@@ -36,8 +36,11 @@ export default {
   */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module',
-    '@nuxtjs/vuetify'
+    //'@nuxtjs/eslint-module',
+    '@nuxtjs/vuetify',
+    ['@nuxtjs/date-fns', { 
+      defaultLocale: 'es'
+     }]
   ],
   /*
   ** Nuxt.js modules
@@ -54,6 +57,13 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+    //host: "status.vivaaerobus.com",
+    host: "localhost",
+    prefix: "/graph",
+    port: 8080,
+    https: false,
+    progress: true,
+    debug: true
   },
   /*
   ** vuetify module configuration
@@ -62,7 +72,7 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         dark: {
           primary: colors.blue.darken2,
