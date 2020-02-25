@@ -1,5 +1,5 @@
 <template>
-  <div class="card-container">
+  <div class="card-container" v-if="data.notificationResume.length > 0">
     <v-card>
       <v-card-title>
         {{ data.name }}
