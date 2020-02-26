@@ -63,6 +63,8 @@ export default {
 </script>
 
 <style lang="scss">
+
+
 .resume {
   position: relative;
   .resume-bar {
@@ -70,6 +72,10 @@ export default {
     grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
     width: 100%;
     gap: 3px;
+
+    @include media('<=phone'){
+      grid-template-columns: repeat(25, 1fr);
+    }
 
     .bar-segment {
       height: 50px;
