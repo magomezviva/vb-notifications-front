@@ -1,21 +1,17 @@
 <template>
   <div class="card-container" v-if="data.notificationResume.length > 0">
     <v-card>
-      <v-card-title>
-        {{ data.name }}
-      </v-card-title>
       <v-card-text>
+        <h2>{{ data.name }}</h2>
+        <p><small class="caption">{{ data.description }}</small></p>
         <template v-if="data.notificationResume.length > 0">
-          <v-alert border="bottom" colored-border type="error" v-if="data.notificationResume[data.notificationResume.length - 1].isError">
-            {{ data.notificationResume[data.notificationResume.length - 1].message }}
-          </v-alert>
-          <v-alert border="bottom" colored-border type="success" v-else>
-            {{ data.notificationResume[data.notificationResume.length - 1].message }}
+          <v-alert border="bottom" colored-border :type="alertType">
+            {{ (alternativeData !== null)?alternativeData.message:data.notificationResume[data.notificationResume.length - 1].message }} <small>{{ humanDate }}</small>
           </v-alert>
         </template>
       </v-card-text>
       <v-card-text>
-        <History :resumeData="data.notificationResume" />
+        <History :resumeData="data.notificationResume" @eventData="alternativeInfo"/>
       </v-card-text>
     </v-card>
   </div>
@@ -24,7 +20,7 @@
 <script>
 import History from './History';
 export default {
-  components:{
+  components: {
     History
   },
   props: {
@@ -38,10 +34,32 @@ export default {
       }
     }
   },
-  beforeMount(){
-    //this.data.notificationResume = this.data.notificationResume.sort((a, b) => (new Date(a.createdAt) > new Date(b.createdAt))?1:-1);
-    //console.log(['notification resume', this.data.notificationResume]);
-  }
+  data() {
+    return {
+      alternativeData: null
+    }
+  },
+  methods: {
+    alternativeInfo(data) {
+      this.alternativeData = data;
+    }
+  },
+  computed: {
+    alertType() {
+      if (this.alternativeData !== null) {
+        return (this.alternativeData.isError) ? "error" : "success";
+      } else {
+        return (this.data.notificationResume[this.data.notificationResume.length - 1].isError) ? "error" : "success";
+      }
+    },
+    humanDate() {
+      if (this.alternativeData !== null) {
+        return this.$dateFns.format(this.alternativeData.createdAt, "dd-MM-yyyy hh:mm");
+      } else {
+        return this.$dateFns.format(this.data.notificationResume[this.data.notificationResume.length - 1].createdAt, "dd-MM-yyyy hh:mm");
+      }
+    },
+  },
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="resume">
-    <div class="resume-bar" @mouseleave="showTooltip = false">
+    <div class="resume-bar" @mouseleave="setTooltip(null)">
       <template v-if="resumeData.length > 0">
         <template v-for="(el, index) of resumeDataOrdered">
           <div :key="index" class="bar-segment" @mouseenter="setTooltip(el)"
@@ -13,12 +13,6 @@
         </template>
       </template>
     </div>
-    <transition name="resume-anim">
-      <div class="resume-text" v-if="details !== null && showTooltip">
-        <p>{{ details.message }}</p>
-        <p>{{ humanDate }}</p>
-      </div>
-    </transition>
   </div>
 </template>
 
@@ -45,10 +39,8 @@ export default {
     setTooltip(data) {
       this.details = data;
       this.showTooltip = true;
+      this.$emit('eventData',data);
     },
-    // orderElements(){
-    //   this.resumeData = this.resumeData.sort((a, b) => (new Date(a.createdAt) > new Date(b.createdAt))?1:-1)
-    // }
   },
   computed: {
     humanDate() {
@@ -63,12 +55,8 @@ export default {
     }
   },
   mounted(){
-    //this.orderElements();
     this.ramdomBoxes = Math.random();
   },
-  // updated(){
-  //   this.orderElements();
-  // }
 }
 </script>
 

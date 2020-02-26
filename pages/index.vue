@@ -11,9 +11,6 @@
     <v-btn @click="getAccountsData" :loading="isLoading" color="green" dark fixed bottom right fab>
       <v-icon>mdi-reload</v-icon>
     </v-btn>
-    <v-overlay v-if="isLoading">
-      <v-progress-circular indeterminate size="64"></v-progress-circular>
-    </v-overlay>
   </v-layout>
 </template>
 
