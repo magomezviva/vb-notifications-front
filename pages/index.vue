@@ -8,9 +8,12 @@
         <Account :data="i" :key="index" />
       </template>
     </v-flex>
-    <v-overlay v-if="isLoading">
+    <!-- <v-overlay v-if="isLoading">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
-    </v-overlay>
+    </v-overlay> -->
+    <v-btn @click="getAccountsData" :loading="isLoading" color="green" dark fixed bottom right fab>
+      <v-icon>mdi-reload</v-icon>
+    </v-btn>
   </v-layout>
 </template>
 
@@ -25,7 +28,8 @@ export default {
       graphData: null,
       limit: 100,
       page: 1,
-      isLoading: true
+      isLoading: true,
+      buttonLoading: false,
     }
   },
   head() {
@@ -41,10 +45,12 @@ export default {
       ]
     }
   },
-  async mounted() {
-    try {
-      const url = ''
-      const query = `
+  methods: {
+    async getAccountsData() {
+      this.isLoading = true;
+      try {
+        const url = ''
+        const query = `
       {
        GetAccounts(page: ${this.page}, limit: ${this.limit}){
            totalDocs,
@@ -62,19 +68,24 @@ export default {
          }
       }`
 
-      const data = await this.$axios({
-        url,
-        method: 'post',
-        data: {
-          query
-        }
-      });
-      this.graphData = data.data.data;
-      this.graphData.GetAccounts.docs = this.graphData.GetAccounts.docs.sort((a,b) => (a.name > b.name)?1:-1);
-      this.isLoading = false;
-    } catch (error) {
-      console.warn(error);
+        const data = await this.$axios({
+          url,
+          method: 'post',
+          data: {
+            query
+          }
+        });
+        this.graphData = data.data.data;
+        this.graphData.GetAccounts.docs = this.graphData.GetAccounts.docs.sort((a, b) => (a.name > b.name) ? 1 : -1);
+        this.isLoading = false;
+      } catch (error) {
+        this.isLoading = true;
+        console.warn(error);
+      }
     }
+  },
+  mounted() {
+    this.getAccountsData();
   }
 }
 </script>
