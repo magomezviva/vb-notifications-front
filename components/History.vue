@@ -2,7 +2,7 @@
   <div class="resume">
     <div class="resume-bar" @mouseleave="showTooltip = false">
       <template v-if="resumeData.length > 0">
-        <template v-for="(el, index) of resumeData">
+        <template v-for="(el, index) of resumeDataOrdered">
           <div :key="index" class="bar-segment" @mouseenter="setTooltip(el)"
             :class="{ 'error': el.isError, 'success' : !el.isError }"></div>
         </template>
@@ -45,7 +45,10 @@ export default {
     setTooltip(data) {
       this.details = data;
       this.showTooltip = true;
-    }
+    },
+    // orderElements(){
+    //   this.resumeData = this.resumeData.sort((a, b) => (new Date(a.createdAt) > new Date(b.createdAt))?1:-1)
+    // }
   },
   computed: {
     humanDate() {
@@ -54,11 +57,18 @@ export default {
       }else{
         return "";
       } 
+    },
+    resumeDataOrdered(){
+      return this.resumeData.sort((a, b) => (new Date(a.createdAt) > new Date(b.createdAt))?1:-1);
     }
   },
-  beforeMount(){
+  mounted(){
+    //this.orderElements();
     this.ramdomBoxes = Math.random();
-  }
+  },
+  // updated(){
+  //   this.orderElements();
+  // }
 }
 </script>
 

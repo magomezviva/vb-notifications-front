@@ -39,7 +39,8 @@ export default {
     }
   },
   beforeMount(){
-    this.data.notificationResume = this.data.notificationResume.reverse();
+    //this.data.notificationResume = this.data.notificationResume.sort((a, b) => (new Date(a.createdAt) > new Date(b.createdAt))?1:-1);
+    //console.log(['notification resume', this.data.notificationResume]);
   }
 }
 </script>
