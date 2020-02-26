@@ -79,8 +79,9 @@ export default {
 
     .bar-segment {
       height: 50px;
-      transition: ease .3s;
+      transition: ease .2s;
       cursor: pointer;
+      border-radius: 7px;
 
       &:hover{
         transform: translate(0, -10px);
@@ -101,14 +102,15 @@ export default {
   .resume-text{
     padding: 10px;
     position: absolute;
-    top: 100%;
+    top: 0;
     left: 0;
+    transform: translate(0, -120%);
     background: #fff;
     z-index: 100;
     width: 100%;
-    border-radius: 5px;
-    margin-top: 10px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    border-radius: 3px;
+    //margin-bottom: 40px;
+    //box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
   }
 }
 

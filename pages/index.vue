@@ -5,9 +5,12 @@
     </v-flex>
     <v-flex xs12 sm12 md12 v-if="graphData !== null">
       <template v-for="(i, index) of graphData.GetAccounts.docs">
-        <Account :data="i" :key="index"/>
+        <Account :data="i" :key="index" />
       </template>
     </v-flex>
+    <v-overlay v-if="isLoading">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </v-layout>
 </template>
 
@@ -22,6 +25,7 @@ export default {
       graphData: null,
       limit: 100,
       page: 1,
+      isLoading: true
     }
   },
   head() {
@@ -66,6 +70,8 @@ export default {
         }
       });
       this.graphData = data.data.data;
+      this.graphData.GetAccounts.docs = this.graphData.GetAccounts.docs.sort((a,b) => (a.name > b.name)?1:-1);
+      this.isLoading = false;
     } catch (error) {
       console.warn(error);
     }
